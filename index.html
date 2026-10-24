@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#faf6fd" />
+  <meta name="description" content="İkimizin küçük dünyası — 3 boyutlu anılarımız, mektuplarımız ve güzel hikâyemiz." />
+  <title>Bizim Küçük Dünyamız ♡ 3D Anı Defteri</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Arka plan 3D parçacık ve parıltı tuvali -->
+  <canvas id="ambientCanvas" class="ambient-canvas" aria-hidden="true"></canvas>
+  <div class="paper-grain" aria-hidden="true"></div>
+  <div id="ambientCursorLight" class="ambient-cursor-light" aria-hidden="true"></div>
+
+  <!-- Üst Menü / Navbar -->
+  <header class="topbar">
+    <a class="brand" href="#baslangic" aria-label="Başlangıca dön">
+      <span class="brand-flower" aria-hidden="true">✿</span>
+      <span class="brand-text">bizim küçük dünyamız</span>
+      <span class="brand-badge-3d">3D</span>
+    </a>
+
+    <nav aria-label="Ana Gezinti">
+      <a href="#baslangic" class="nav-link">Başlangıç</a>
+      <a href="#galeri-3d" class="nav-link">3D Anı Çarkı</a>
+      <a href="#anilar" class="nav-link">Polaroidler</a>
+      <a href="#mektup" class="nav-link">3D Mektup</a>
+    </nav>
+
+    <div class="topbar-actions">
+      <button class="music-toggle" id="musicToggle" type="button" aria-label="Müziği aç veya kapat" title="Sting - Shape of My Heart">
+        <div class="vinyl-record" aria-hidden="true">
+          <div class="vinyl-center"></div>
+        </div>
+        <span class="music-label">Shape of My Heart</span>
+        <span class="music-wave" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO BÖLÜMÜ (3D PERSPEKTİF SAHNESİ) -->
+    <section class="hero section-wrap" id="baslangic">
+      <div class="hero-copy">
+        <h1 class="hero-title">
+          Daha yolun başındayız,<br>
+          <em class="highlight-text">ne güzel bir başlangıç.</em>
+        </h1>
+        
+        <p class="hero-text">
+          Birlikte keşfedeceğimiz onlarca durak, güleceğimiz yüzlerce anı var. 
+          Şimdilik bu 3 boyutlu küçük köşe, seninle geçirdiğim en tatlı günlere ve sıradaki güzel sürprizlere ait. ♡
+        </p>
+        
+        <div class="hero-buttons">
+          <a class="primary-button" href="#galeri-3d">
+            <span>3D Anı Çarkını Keşfet</span>
+            <span class="button-icon">✨</span>
+          </a>
+          <a class="secondary-pill-button" href="#mektup">
+            <span>Mektubunu Aç</span>
+            <span class="button-icon">✉</span>
+          </a>
+        </div>
+        
+        <div class="handwritten-note hero-note" aria-hidden="true">
+          devamını birlikte<br>yazalım mı? ♡
+        </div>
+      </div>
+
+      <!-- 3D Sahne ve Polaroid Katmanları -->
+      <div class="hero-scene-container" id="hero3dStage" aria-label="3 boyutlu hareketli anı fotoğrafları">
+        <div class="hero-scene-glow"></div>
+        
+        <!-- Yüzen 3D Dekorlar -->
+        <span class="scene-doodle doodle-heart-3d" aria-hidden="true">♡</span>
+        <span class="scene-doodle doodle-sparkle-3d" aria-hidden="true">✦</span>
+        <span class="scene-doodle doodle-flower-3d" aria-hidden="true">✿</span>
+
+        <!-- Ana Polaroid Kartı (gulenresim.jpeg) -->
+        <figure class="polaroid-3d hero-polaroid-main" data-tilt-depth="45">
+          <div class="polaroid-tape tape-top"></div>
+          <div class="polaroid-inner">
+            <div class="polaroid-photo-frame">
+              <img src="Yeni%20klas%C3%B6r/gulenresim.jpeg" alt="Gülümseyen güzel fotoğrafımız" loading="eager" onerror="this.onerror=null; this.src='images/gulenresim.jpeg';">
+              <div class="polaroid-sheen"></div>
+            </div>
+            <figcaption>en güzel gülüşün ♡</figcaption>
+          </div>
+          <div class="polaroid-shadow"></div>
+        </figure>
+
+        <!-- İkinci Polaroid Kartı (sıradakidurak.jpeg) -->
+        <figure class="polaroid-3d hero-polaroid-sub" data-tilt-depth="60">
+          <div class="polaroid-tape tape-angle"></div>
+          <div class="polaroid-inner">
+            <div class="polaroid-photo-frame">
+              <img src="Yeni%20klas%C3%B6r/s%C4%B1radakidurak.jpeg" alt="Birlikte yoldayken çekilen fotoğraf" loading="eager" onerror="this.onerror=null; this.src='images/sıradakidurak.jpeg';">
+              <div class="polaroid-sheen"></div>
+            </div>
+            <figcaption>sıradaki durağımız ✈</figcaption>
+          </div>
+          <div class="polaroid-shadow"></div>
+        </figure>
+
+        <!-- Üçüncü Mini Polaroid Kartı (guzelbaslangıc.jpeg) -->
+        <figure class="polaroid-3d hero-polaroid-mini" data-tilt-depth="75">
+          <div class="polaroid-inner">
+            <div class="polaroid-photo-frame">
+              <img src="Yeni%20klas%C3%B6r/guzelbaslang%C4%B1c.jpeg" alt="İlk güzel başlangıç anımız" loading="eager" onerror="this.onerror=null; this.src='images/guzelbaslangıc.jpeg';">
+              <div class="polaroid-sheen"></div>
+            </div>
+            <figcaption>iyi ki başladık ✿</figcaption>
+          </div>
+          <div class="polaroid-shadow"></div>
+        </figure>
+      </div>
+
+      <div class="scroll-indicator" aria-hidden="true">
+        <span>aşağı kaydır ve keşfet</span>
+        <div class="mouse-scroll-wheel">
+          <div class="wheel-dot"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3D YÜZEN ŞERİT (DERİNLİK ŞERİDİ) -->
+    <section class="depth-ribbon-section">
+      <div class="depth-ribbon">
+        <div class="ribbon-item"><span>biraz tebessüm</span><i aria-hidden="true">✿</i></div>
+        <div class="ribbon-item"><span>bolca kahkaha</span><i aria-hidden="true">♡</i></div>
+        <div class="ribbon-item"><span>yan yana anlar</span><i aria-hidden="true">✧</i></div>
+        <div class="ribbon-item"><span>hep biz</span><i aria-hidden="true">✿</i></div>
+        <div class="ribbon-item"><span>3 boyutlu anılar</span><i aria-hidden="true">♡</i></div>
+      </div>
+    </section>
+
+    <!-- BÖLÜM 1: 3 BOYUTLU ANI ÇARKI (3D CYLINDER CAROUSEL) -->
+    <section class="carousel-3d-section section-wrap" id="galeri-3d">
+      <div class="section-header text-center">
+        <p class="section-tag"><span>✦</span> ETKİLEŞİMLİ 3D DENEYİM <span>✦</span></p>
+        <h2 class="section-title">3 Boyutlu <em>Anı Çarkımız</em></h2>
+        <p class="section-subtitle">
+          Mouse ile sürükle veya butonlara tıkla; 8 özel fotoğrafımızı derinlikli 3D silindirde döndürerek incele! 
+          Büyütmek için fotoğrafa dokunabilirsin.
+        </p>
+      </div>
+
+      <!-- 3D CAROUSEL SAHNESİ -->
+      <div class="carousel-viewport" id="carouselViewport">
+        <div class="carousel-cylinder" id="carouselCylinder">
+          <!-- JS ile 8 adet 3D kart buraya yerleştirilecek -->
+        </div>
+      </div>
+
+      <!-- Carousel Kontrolleri -->
+      <div class="carousel-controls">
+        <button class="carousel-btn prev-btn" id="carouselPrev" type="button" aria-label="Önceki anıya dön">
+          <span class="btn-arrow">❮</span>
+          <span class="btn-text">Geri</span>
+        </button>
+
+        <button class="carousel-play-toggle" id="carouselPlayToggle" type="button" aria-label="Otomatik dönmeyi duraklat veya başlat">
+          <span id="playToggleIcon">⏸</span>
+          <span id="playToggleText">Duraklat</span>
+        </button>
+
+        <button class="carousel-btn next-btn" id="carouselNext" type="button" aria-label="Sonraki anıya geç">
+          <span class="btn-text">İleri</span>
+          <span class="btn-arrow">❯</span>
+        </button>
+      </div>
+
+      <div class="carousel-indicators" id="carouselIndicators" aria-label="Anı kartı göstergeleri">
+        <!-- JS ile nokta indikatörler -->
+      </div>
+      
+      <p class="carousel-tip">
+        <span>💡 İpucu:</span> Kartları mouse veya parmağınla tutup sağa-sola serbestçe çevirebilirsin!
+      </p>
+    </section>
+
+    <!-- BÖLÜM 2: 3D POLAROID DEFTERİ (TILT & 3D FLIP KARTLAR) -->
+    <section class="memories-section section-wrap" id="anilar">
+      <div class="section-header text-center">
+        <p class="section-tag"><span>♡</span> ANILARIMIZIN HER DETAYI <span>♡</span></p>
+        <h2 class="section-title">Dokun, Hisset & <em>Çevir</em></h2>
+        <p class="section-subtitle">
+          Kartların üzerine gelince 3 boyutlu olarak eğilirler. 
+          Arka yüzlerindeki el yazısı gizli notları ve anı hikâyelerini okumak için <strong>"Çevir ↷"</strong> düğmesine tıkla!
+        </p>
+      </div>
+
+      <!-- 3D Polaroid Kart Izgarası -->
+      <div class="memory-3d-grid" id="memory3dGrid">
+        <!-- script.js içindeki memories dizisinden 8 adet çift taraflı 3D kart dinamik yüklenir -->
+      </div>
+    </section>
+
+
+
+
+
+    <!-- BÖLÜM 3: İNTERAKTİF 3D MEKTUP VE ZARF (3D ORIGAMI ENVELOPE) -->
+    <section class="envelope-3d-section" id="mektup">
+      <div class="section-header text-center">
+        <p class="section-tag"><span>✉</span> SANA ÖZEL BİR NOT <span>✉</span></p>
+        <h2 class="section-title">3 Boyutlu <em>Mektubumuz</em></h2>
+        <p class="section-subtitle">
+          Kırmızı mum mührü kır ve zarfı aç; sana içimden gelen küçük cümlelerimi bıraktım.
+        </p>
+      </div>
+
+      <div class="envelope-interactive-stage">
+        <!-- 3D Zarf Bileşeni -->
+        <div class="envelope-wrapper" id="envelopeWrapper">
+          <div class="envelope-3d" id="envelope3d">
+            <!-- Arka Gövde -->
+            <div class="envelope-back"></div>
+            
+            <!-- Mektup Kâğıdı (Zarfın içinden 3D yükselen) -->
+            <article class="letter-paper" id="letterPaper" aria-label="Özel mektup metni">
+              <div class="letter-header">
+                <span class="letter-stamp-mini">SANA ÖZEL ♡</span>
+                <span class="letter-date-display">her güzel anımızda</span>
+              </div>
+              <h3 class="letter-heading">Sana küçük bir not…</h3>
+              <div class="letter-content-text">
+                <p>
+                  Belki daha yolun başındayız ve birbirimizin dünyasında yeni yeni adımlar atıyoruz; ama seninle gülmek, günün içinde senden gelen tatlı bir mesajı görmek şimdiden içimi ısıtıyor.
+                </p>
+                <p>
+                  Birlikte geçirdiğimiz her an, yan yana çekildiğimiz bu fotoğraflar ve aramızdaki o samimi bağ benim için çok değerli. Acele etmeden, her anın tadını çıkararak birlikte büyütmek istediğim bir hikâyemiz var.
+                </p>
+                <p>
+                  Bu 3 boyutlu küçük köşe de sana tatlı bir tebessüm olsun istedim: Yanında olmaktan, seninle geleceğe dair hayaller kurmaktan ve seninle yürümekten çok mutluyum. ♡
+                </p>
+              </div>
+              <div class="letter-signature">
+                <span>Seni çok seven biri,</span>
+                <strong>Daima seninle... ♡</strong>
+              </div>
+              <button class="fold-letter-btn" id="foldLetterBtn" type="button">
+                <span>Zarfı Kapat ↺</span>
+              </button>
+            </article>
+
+            <!-- Zarfın Ön Katları -->
+            <div class="envelope-left"></div>
+            <div class="envelope-right"></div>
+            <div class="envelope-bottom"></div>
+            
+            <!-- Açılır Üst Kapak (3D rotateX) -->
+            <div class="envelope-top-flap" id="envelopeTopFlap">
+              <div class="envelope-flap-triangle"></div>
+            </div>
+
+            <!-- 3D Mum Mühür (Wax Seal) -->
+            <button class="wax-seal" id="waxSealBtn" type="button" aria-label="Mektubu açmak için mühre tıkla">
+              <div class="wax-seal-inner">
+                <span class="seal-icon">♡</span>
+                <span class="seal-text">AÇ</span>
+              </div>
+              <div class="seal-glow"></div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mektup Açma Yönergesi -->
+        <div class="envelope-prompt" id="envelopePrompt">
+          <span class="finger-pointer">👆</span>
+          <p>Mührün üzerine dokunarak mektubu açabilirsin!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BÖLÜM 4: GİZLİ SÜRPRİZ VE SON SÖZ -->
+    <section class="final-capsule-section">
+      <div class="capsule-container text-center">
+        <div class="capsule-star">✦ ✳ ✦</div>
+        <p class="capsule-tag">BU HENÜZ İLK BÖLÜM…</p>
+        <h2 class="capsule-title">
+          Daha birlikte yazacağımız<br>
+          <em>nice güzel sayfalarımız var.</em>
+        </h2>
+
+        <!-- 3D Hediye / Gizli Mesaj Butonu -->
+        <button class="secret-capsule-btn" id="secretButton" type="button" aria-expanded="false">
+          <span class="capsule-box-icon">🎁</span>
+          <span class="capsule-btn-text">Son bir küçük sürpriz daha…</span>
+        </button>
+
+        <div class="secret-capsule-content" id="secretMessage" hidden>
+          <div class="confetti-hearts" aria-hidden="true">♡ ✿ ♡ ✦ ♡</div>
+          <p class="secret-lead">İyi ki varsın, iyi ki yanımdasın.</p>
+          <p class="secret-body">
+            Gözlerinin içine her baktığımda hissettiğim o huzur, günün bütün yorgunluğunu unutturuyor. 
+            Seninle başladığımız bu yolculukta her anı aşkla, sabırla ve kocaman bir sevgiyle biriktireceğiz.
+          </p>
+          <div class="secret-heart-big">❤️</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ALT BİLGİ (FOOTER) -->
+  <footer class="site-footer">
+    <div class="footer-wrap">
+      <div class="footer-left">
+        <span class="footer-heart">♡</span>
+        <span>İkimizin Küçük Dünyası — Sevgiyle hazırlandı.</span>
+      </div>
+      <div class="footer-right">
+        <a href="#baslangic" class="back-to-top">
+          <span>En başa dön</span>
+          <span class="arrow-up">↑</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 3D BÜYÜTÜLMÜŞ FOTOĞRAF MODALI (3D LIGHTBOX) -->
+  <div class="modal-3d-backdrop" id="memoryModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-click-overlay" data-close-modal></div>
+    
+    <article class="modal-3d-box">
+      <button class="modal-close-btn" id="modalClose" type="button" aria-label="Pencereyi kapat">✕</button>
+      
+      <!-- Navigasyon Butonları -->
+      <button class="modal-nav-btn modal-prev-btn" id="modalPrev" type="button" aria-label="Önceki fotoğraf">❮</button>
+      <button class="modal-nav-btn modal-next-btn" id="modalNext" type="button" aria-label="Sonraki fotoğraf">❯</button>
+
+      <div class="modal-grid-layout">
+        <div class="modal-media-side">
+          <div class="modal-img-container">
+            <img id="modalImage" src="" alt="Seçilen Anı" />
+            <div id="modalPlaceholder" class="modal-media-placeholder" hidden>♡</div>
+          </div>
+        </div>
+
+        <div class="modal-text-side">
+          <span class="modal-category-tag" id="modalDate">KÜÇÜK BİR ANI</span>
+          <h2 class="modal-story-title" id="modalTitle">O Güzel Gün</h2>
+          <p class="modal-story-body" id="modalText"></p>
+          
+          <div class="modal-footer-decor">
+            <span class="modal-index-counter" id="modalCounter">1 / 8</span>
+            <span class="modal-heart-sign">♡ sonsuza dek</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <!-- Arka Plan Müziği: Sting - Shape of My Heart -->
+  <audio id="bgAudio" loop playsinline preload="auto">
+    <source src="sarki.mp3" type="audio/mp3">
+    <source src="sarki.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- BİLDİRİM TOAST MESAJI -->
+  <div class="toast-3d" id="toast" role="status" aria-live="polite">
+    <span class="toast-icon">♫</span>
+    <span class="toast-text" id="toastText">Romantik melodi başlatıldı...</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
